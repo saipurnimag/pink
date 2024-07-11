@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>HTML DOM Events</h1>
+    <h2>The onclick Event</h2>
+
+    <p>The onclick event triggers a function when an element is clicked on.</p>
+    <p>Click to trigger a function that will output "Hello World":</p>
+
+    <input id="myInput" type="text">
+
+    <button type="submit" onclick="myFunction()">Click me</button>
+
+    <p id="demo"></p>
+
+    <script>
+        function myFunction() {
+            let inp = document.getElementById("myInput").value;
+            // Make an HTTP GET call to 127.0.0.1:5000/items/inp
+            fetch(`http://127.0.0.1:5000/items/${inp}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById("demo").innerText = JSON.stringify(data);
+                })
+                .catch(error => {
+                    document.getElementById("demo").innerText = 'Fetch error: ' + error;
+                });
+        }
+    </script>
+
+</body>
+
+</html>
